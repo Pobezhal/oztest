@@ -33,6 +33,30 @@ def test_requests():
         except Exception as e:
             print(f"Failed: {e}")
 
+
+def test_proxy():
+    """Test if the proxy is working"""
+    print("=== TESTING PROXY ===")
+    
+    proxy = "brd-customer-hl_42f59e9c-zone-residential_proxy1:pk9xnd82b76j@brd.superproxy.io:33335"
+    opts.add_argument(f"--proxy-server={proxy}")
+    
+    
+    try:
+        # Test with a simple site first
+        response = requests.get("https://httpbin.org/ip", proxies=proxies, timeout=10)
+        print(f"✓ Proxy test passed: {response.status_code}")
+        print(f"IP via proxy: {response.text}")
+        
+        # Now test Ozon with proxy
+        response = requests.get("https://ozon.kz", proxies=proxies, timeout=10)
+        print(f"✓ Ozon via proxy: {response.status_code}")
+        print(f"Contains Ozon: {'Ozon' in response.text}")
+        
+    except Exception as e:
+        print(f"✗ Proxy failed: {e}")
+
+
 def test_selenium():
     """Test if we can access Ozon with Selenium"""
     print("\n=== TESTING SELENIUM ===")
@@ -65,6 +89,7 @@ def test_selenium():
 
     proxy = "brd-customer-hl_42f59e9c-zone-residential_proxy1:pk9xnd82b76j@brd.superproxy.io:33335"
     opts.add_argument(f"--proxy-server={proxy}")
+    
 
     
     # Use Service with chromedriver path
@@ -82,7 +107,7 @@ def test_selenium():
         try:
             print(f"\nTesting: {url}")
             driver.get(url)
-            time.sleep(5)
+            time.sleep(40)
             
             print(f"Page title: {driver.title}")
             print(f"Current URL: {driver.current_url}")
@@ -161,6 +186,7 @@ def test_selenium_headful():
         proxy = "brd-customer-hl_42f59e9c-zone-residential_proxy1:pk9xnd82b76j@brd.superproxy.io:33335"
         opts.add_argument(f"--proxy-server={proxy}")
         
+        
         # Use the exact chromedriver
         from selenium.webdriver.chrome.service import Service
         service = Service(chromedriver_bin)
@@ -170,7 +196,7 @@ def test_selenium_headful():
     
         print(f"Testing: {url}")
         driver.get(url)
-        time.sleep(15)  # Longer wait for headful
+        time.sleep(45)  # Longer wait for headful
         
         print(f"Page title: {driver.title}")
         print(f"Current URL: {driver.current_url}")
@@ -208,7 +234,8 @@ def test_selenium_headful():
 
 if __name__ == "__main__":
     print("🔍 Testing Ozon accessibility from Railway...")
+    test_proxy()
     # test_requests()
-    test_selenium()
-    test_selenium_headful()
+    # test_selenium()
+    # test_selenium_headful()
     print("\n📊 All tests completed.")
