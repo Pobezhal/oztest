@@ -4,6 +4,8 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 import time
 import os
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 def test_requests():
     
@@ -42,19 +44,18 @@ def test_proxy():
     proxies = {"http": proxy, "https": proxy}
     
     try:
-        # Test with a simple site first
-        response = requests.get("https://httpbin.org/ip", proxies=proxies, timeout=10)
+        # Test with a simple site first - disable SSL verification
+        response = requests.get("https://httpbin.org/ip", proxies=proxies, timeout=10, verify=False)
         print(f"✓ Proxy test passed: {response.status_code}")
         print(f"IP via proxy: {response.text}")
         
-        # Now test Ozon with proxy
-        response = requests.get("https://ozon.kz", proxies=proxies, timeout=10)
+        # Now test Ozon with proxy - disable SSL verification
+        response = requests.get("https://ozon.kz", proxies=proxies, timeout=10, verify=False)
         print(f"✓ Ozon via proxy: {response.status_code}")
         print(f"Contains Ozon: {'Ozon' in response.text}")
         
     except Exception as e:
         print(f"✗ Proxy failed: {e}")
-
 
 
 def test_selenium():
