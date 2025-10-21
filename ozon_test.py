@@ -34,13 +34,12 @@ def test_requests():
             print(f"Failed: {e}")
 
 
+
 def test_proxy():
     """Test if the proxy is working"""
     print("=== TESTING PROXY ===")
-    
-    proxy = "brd-customer-hl_42f59e9c-zone-residential_proxy1:pk9xnd82b76j@brd.superproxy.io:33335"
-    opts.add_argument(f"--proxy-server={proxy}")
-    
+    proxy = "http://brd-customer-hl_42f59e9c-zone-residential_proxy1:pk9xnd82b76j@brd.superproxy.io:33335"
+    proxies = {"http": proxy, "https": proxy}
     
     try:
         # Test with a simple site first
@@ -55,6 +54,7 @@ def test_proxy():
         
     except Exception as e:
         print(f"✗ Proxy failed: {e}")
+
 
 
 def test_selenium():
