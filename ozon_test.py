@@ -235,8 +235,8 @@ def test_selenium_headful():
 
 if __name__ == "__main__":
     print("🔍 Testing Ozon accessibility from Railway...")
-    test_proxy()
+    # test_proxy()
     # test_requests()
     test_selenium()
-    test_selenium_headful()
+    # test_selenium_headful()
     print("\n📊 All tests completed.")
