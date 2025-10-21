@@ -36,7 +36,8 @@ def test_requests():
 def test_selenium():
     """Test if we can access Ozon with Selenium"""
     print("\n=== TESTING SELENIUM ===")
-   
+    OZON_URL = "https://ozon.kz/category/shiny-i-diski-8501/continental-18580188/?brand_was_predicted=true&deny_category_prediction=true&from_global=true&season=31827%2C33890&text=Continental&tirecondition=101129387"
+    
     # Use the SAME environment variables as main project
     chrome_bin = os.getenv("CHROME_BIN", "/nix/var/nix/profiles/default/bin/chromium")
     chromedriver_bin = os.getenv("CHROMEDRIVER_BIN", "/nix/var/nix/profiles/default/bin/chromedriver")
