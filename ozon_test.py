@@ -59,6 +59,10 @@ def test_selenium():
     opts.add_argument("--disable-dev-shm-usage")
     opts.add_argument("--headless=new")
     opts.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
+
+    opts.add_argument("--disable-blink-features=AutomationControlled")
+    opts.add_experimental_option("excludeSwitches", ["enable-automation"])
+
     
     # Use Service with chromedriver path
     from selenium.webdriver.chrome.service import Service
@@ -147,6 +151,9 @@ def test_selenium_headful():
         opts.add_argument("--disable-dev-shm-usage")
         opts.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
         opts.add_argument("--window-size=1920,1080")
+
+        opts.add_argument("--disable-blink-features=AutomationControlled")
+        opts.add_experimental_option("excludeSwitches", ["enable-automation"])
         
         # Use the exact chromedriver
         from selenium.webdriver.chrome.service import Service
@@ -195,7 +202,7 @@ def test_selenium_headful():
 
 if __name__ == "__main__":
     print("🔍 Testing Ozon accessibility from Railway...")
-    test_requests()
-    test_selenium()
+    # test_requests()
+    # test_selenium()
     test_selenium_headful()
     print("\n📊 All tests completed.")
