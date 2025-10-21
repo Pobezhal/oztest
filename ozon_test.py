@@ -1,16 +1,19 @@
 import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 import time
 import os
 
 def test_requests():
+    
+    OZON_URL = "https://ozon.kz/category/shiny-i-diski-8501/continental-18580188/?brand_was_predicted=true&deny_category_prediction=true&from_global=true&season=31827%2C33890&text=Continental&tirecondition=101129387"
     """Test if we can access Ozon with simple requests"""
     print("=== TESTING REQUESTS ===")
     urls = [
         "https://ozon.kz",
         "https://ozon.kz/search/?text=continental&brand=18580188",
-        "https://ozon.kz/category/shiny-i-diski-8501/continental-18580188/"
+        OZON_URL
     ]
     
     for url in urls:
@@ -33,20 +36,38 @@ def test_requests():
 def test_selenium():
     """Test if we can access Ozon with Selenium"""
     print("\n=== TESTING SELENIUM ===")
+   
+    # Use the SAME environment variables as main project
+    chrome_bin = os.getenv("CHROME_BIN", "/nix/var/nix/profiles/default/bin/chromium")
+    chromedriver_bin = os.getenv("CHROMEDRIVER_BIN", "/nix/var/nix/profiles/default/bin/chromedriver")
+    
+    print(f"Using Chrome: {chrome_bin}")
+    print(f"Using Chromedriver: {chromedriver_bin}")
+    
+    # Check if files exist
+    if not os.path.exists(chrome_bin):
+        print(f"❌ Chrome binary not found at {chrome_bin}")
+        return False
+    if not os.path.exists(chromedriver_bin):
+        print(f"❌ Chromedriver not found at {chromedriver_bin}")
+        return False
+    
     opts = Options()
+    opts.binary_location = chrome_bin
     opts.add_argument("--no-sandbox")
     opts.add_argument("--disable-dev-shm-usage")
     opts.add_argument("--headless=new")
-    
-    # Add user agent
     opts.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
     
-    driver = webdriver.Chrome(options=opts)
+    # Use Service with chromedriver path
+    from selenium.webdriver.chrome.service import Service
+    service = Service(chromedriver_bin)
+    driver = webdriver.Chrome(service=service, options=opts)
     
     urls = [
         "https://ozon.kz",
         "https://ozon.kz/search/?text=continental&brand=18580188",
-        "https://ozon.kz/category/shiny-i-diski-8501/continental-18580188/"
+        OZON_URL 
     ]
     
     for url in urls:
@@ -88,6 +109,8 @@ def test_selenium():
 def test_selenium_headful():
     """Test if we can access Ozon with headful Selenium using virtual display"""
     print("\n=== TESTING SELENIUM HEADFUL ===")
+    OZON_URL = "https://ozon.kz/category/shiny-i-diski-8501/continental-18580188/?brand_was_predicted=true&deny_category_prediction=true&from_global=true&season=31827%2C33890&text=Continental&tirecondition=101129387"
+
     
     # Use the SAME environment variables as main project
     chrome_bin = os.getenv("CHROME_BIN", "/nix/var/nix/profiles/default/bin/chromium")
@@ -129,10 +152,11 @@ def test_selenium_headful():
         service = Service(chromedriver_bin)
         
         driver = webdriver.Chrome(service=service, options=opts)
-        url = "https://ozon.kz/search/?text=continental&brand=18580188"
+        url = "https://ozon.kz/category/shiny-i-diski-8501/continental-18580188/?brand_was_predicted=true&deny_category_prediction=true&from_global=true&season=31827%2C33890&text=Continental&tirecondition=101129387"
+    
         print(f"Testing: {url}")
         driver.get(url)
-        time.sleep(10)  # Longer wait for headful
+        time.sleep(15)  # Longer wait for headful
         
         print(f"Page title: {driver.title}")
         print(f"Current URL: {driver.current_url}")
@@ -173,4 +197,4 @@ if __name__ == "__main__":
     test_requests()
     test_selenium()
     test_selenium_headful()
-    print("\n📊 All tests completed. Check the saved files for details.")
+    print("\n📊 All tests completed.")
