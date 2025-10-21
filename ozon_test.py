@@ -63,6 +63,9 @@ def test_selenium():
     opts.add_argument("--disable-blink-features=AutomationControlled")
     opts.add_experimental_option("excludeSwitches", ["enable-automation"])
 
+    proxy = "brd-customer-hl_42f59e9c-zone-residential_proxy1:pk9xnd82b76j@brd.superproxy.io:33335"
+    opts.add_argument(f"--proxy-server={proxy}")
+
     
     # Use Service with chromedriver path
     from selenium.webdriver.chrome.service import Service
@@ -154,6 +157,9 @@ def test_selenium_headful():
 
         opts.add_argument("--disable-blink-features=AutomationControlled")
         opts.add_experimental_option("excludeSwitches", ["enable-automation"])
+
+        proxy = "brd-customer-hl_42f59e9c-zone-residential_proxy1:pk9xnd82b76j@brd.superproxy.io:33335"
+        opts.add_argument(f"--proxy-server={proxy}")
         
         # Use the exact chromedriver
         from selenium.webdriver.chrome.service import Service
@@ -203,6 +209,6 @@ def test_selenium_headful():
 if __name__ == "__main__":
     print("🔍 Testing Ozon accessibility from Railway...")
     # test_requests()
-    # test_selenium()
+    test_selenium()
     test_selenium_headful()
     print("\n📊 All tests completed.")
