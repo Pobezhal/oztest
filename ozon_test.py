@@ -40,7 +40,7 @@ def test_requests():
 def test_proxy():
     """Test if the proxy is working"""
     print("=== TESTING PROXY ===")
-    proxy = "http://brd-customer-hl_42f59e9c-zone-residential_proxy1-country-us:pk9xnd82b76j@brd.superproxy.io:33335"
+    proxy = "http://brd-customer-hl_42f59e9c-zone-residential_proxy1-country-ge:pk9xnd82b76j@brd.superproxy.io:33335"
     proxies = {"http": proxy, "https": proxy}
     
     try:
@@ -88,7 +88,7 @@ def test_selenium():
     opts.add_argument("--disable-blink-features=AutomationControlled")
     opts.add_experimental_option("excludeSwitches", ["enable-automation"])
 
-    proxy = "brd-customer-hl_42f59e9c-zone-residential_proxy1-country-us:pk9xnd82b76j@brd.superproxy.io:33335"
+    proxy = "brd-customer-hl_42f59e9c-zone-residential_proxy1-country-ge:pk9xnd82b76j@brd.superproxy.io:33335"
     
     opts.add_argument(f"--proxy-server={proxy}")
     
@@ -185,7 +185,7 @@ def test_selenium_headful():
         opts.add_argument("--disable-blink-features=AutomationControlled")
         opts.add_experimental_option("excludeSwitches", ["enable-automation"])
 
-        proxy = "brd-customer-hl_42f59e9c-zone-residential_proxy1-country-us:pk9xnd82b76j@brd.superproxy.io:33335"
+        proxy = "brd-customer-hl_42f59e9c-zone-residential_proxy1-country-ge:pk9xnd82b76j@brd.superproxy.io:33335"
         opts.add_argument(f"--proxy-server={proxy}")
         
         
@@ -236,8 +236,8 @@ def test_selenium_headful():
 
 if __name__ == "__main__":
     print("🔍 Testing Ozon accessibility from Railway...")
-    # test_proxy()
+    test_proxy()
     # test_requests()
-    # test_selenium()
+    test_selenium()
     test_selenium_headful()
     print("\n📊 All tests completed.")
